@@ -1,0 +1,39 @@
+snippet #!
+	#!/usr/bin/env lua${1:5.3}
+snippet doc
+	--[
+	--         File: ${1:`Filename('$1.lua', 'foo.lua')`}
+	--       Author: ${2:`g:snip_author`}
+	--  Description:
+	--	${3}
+	--]
+snippet wh
+	while ${1} do
+	  ${2}
+	end
+snippet un
+	repeat
+	  ${2}
+	until ${1}
+snippet br
+	break
+snippet rt
+	return ${1}
+snippet forn
+	for ${1:i} = ${2}, ${3}, ${4} do
+	  ${5}
+	end
+snippet fori
+	for ${1:i} in ${2} do
+	  ${3}
+	end
+snippet l
+	local 
+snippet fn
+	function ${1:f}(${2})
+	  ${3:-- body}
+	end
+snippet lfn
+	local function ${1:f}(${2})
+	  ${3:-- body}
+	end
