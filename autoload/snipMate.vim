@@ -4,6 +4,21 @@ fun! Filename(...)
 	return !a:0 || a:1 == '' ? filename : substitute(a:1, '$1', filename, 'g')
 endf
 
+" Construct CamelCase class name from snake_case filename
+fun! ClassName(name)
+  let parts = split(a:name, '_')
+  call map(parts, "substitute(v:val, '^.', '\\U\\0', '')")
+  return join(parts, '')
+endfun
+
+function! GuardName()
+  let fn = expand('%:t:r')
+  let ext = expand('%:t:e')
+  let parts = split(fn, '_')
+  call map(parts, "toupper(v:val)")
+  return join(parts, '_') . '_' . toupper(ext) . '_'
+endfunction
+
 fun s:RemoveSnippet()
 	unl! g:snipPos s:curPos s:snipLen s:endCol s:endLine s:prevLen
 	     \ s:lastBuf s:oldWord

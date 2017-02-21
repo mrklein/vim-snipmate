@@ -17,25 +17,69 @@ snippet vector
 snippet ns
 	namespace ${1:`Filename('', 'my')`} {
 	  ${2}
-	}  // $1
+	}  // namespace $1
 # Class
 snippet cl
-	class ${1:`Filename('$1_t', 'name')`} {
-	 public:
-	  $1 (${2:arguments});
-	  virtual ~$1 ();
+	class ${1:`ClassName(expand("%:r"))`}
+	{
+	public:
 
-	 private:
-	  ${3:/* data */}
+	  $1(${2:arguments});
+	  virtual ~$1();
+
+	  // Disable copy construction and assignment
+	  $1(const $1&) = delete;
+	  void operator=(const $1&) = delete;
 	};
+snippet rfor
+	for (${1:const} auto& ${2:it} : ${3:arr}) {
+	}
 snippet fori
 	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
 	  ${4:/* code */}
 	}
-snippet once Header include guard #2
-	#ifndef ${1:`toupper(Filename('$1_H_', 'UNTITLED_H_'))`}
+snippet fora forAll construct
+	forAll(${1:vf}, ${2:i}) {
+	  ${3:// ...}
+	}
+snippet rvf Read volume field
+	Foam::vol${1:Scalar}Field ${2:vf}(
+	  IOobject("$2", time.timeName(), mesh,
+	           Foam::IOobject::${3:MUST_READ},
+	           Foam::IOobject::${4:AUTO_WRITE}),
+	  mesh);
+snippet frvf Read volume field using field factory
+	auto& ${1:vf} = ff.read<${2:scalar}>("$1");
+snippet dds Declare dimensionedScalar
+	Foam::dimensionedScalar ${1:name};
+snippet guard Header include guard with Doxygen header
+	#ifndef ${1:`GuardName()`}
+	#define $1
+
+	//! \copyright Institut Jean Lamour
+	//! \author ${2:`g:snips_author`}
+	//! \date ${3:`strftime("%Y")`}
+	//! \class IJL::${4:`ClassName(expand("%:r"))`}
+	//! \brief ${5}
+
+	namespace IJL {
+	${6}
+	}  // namespace IJL
+
+	#endif  // $1
+snippet iguard Header guard
+	#ifndef ${1:`GuardName()`}
 	#define $1
 
 	${2}
 
 	#endif  // $1
+snippet dox Doxygen header
+	//! \copyright Institut Jean Lamour
+	//! \author ${1:`g:snips_author`}
+	//! \date ${2:`strftime("%Y")`}
+	${3}
+snippet noc Copy constructor and assignment removal
+	// Disable copy construction and assignment
+	${1:`ClassName(expand("%:t:r"))`}(const $1&) = delete;
+	void operator=(const $1&) = delete;
