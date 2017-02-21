@@ -1,0 +1,4 @@
+= vim-snipmate
+
+Fork of msanders/snipmate.vim, mainly for addition of new personalized snippets
+and functions.
